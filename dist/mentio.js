@@ -205,7 +205,7 @@ angular.module('mentio', [])
                 );
 
                 $document.on(
-                    'keydown keypress paste', function (event) {
+                    'keydown.mentio keypress.mentio paste.mentio', function (event) {
                         var activeMenuScope = $scope.getActiveMenuScope();
                         if (activeMenuScope) {
                             if (event.which === 9 || event.which === 13) {
@@ -242,6 +242,10 @@ angular.module('mentio', [])
                         }
                     }
                 );
+
+                $scope.$on('$destroy', function () {
+                    $document.off('keydown.mentio keypress.mentio paste.mentio');
+                });
             }],
             link: function (scope, element, attrs) {
                 scope.triggerCharMap = {};
